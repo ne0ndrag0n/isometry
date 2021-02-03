@@ -1,3 +1,5 @@
+GENDEV = /opt/toolchains/sega
+
 CC = m68k-elf-gcc
 AS = m68k-elf-as
 OBJC = m68k-elf-objcopy
@@ -20,14 +22,14 @@ SRCS_S = $(wildcard src/*.s)
 # Order matters here and boot.s must be the first file!
 OBJS = boot/boot.o $(SRCS_C:.c=.o) $(SRCS_S:.s=.o)
 
-all: TicTacToe.bin
+all: Concordia.bin
 
-TicTacToe.bin: TicTacToe.elf
+Concordia.bin: Concordia.elf
 	$(OBJC) -O binary $< temp.bin
 	dd if=temp.bin of=$@ bs=8K conv=sync
 
-TicTacToe.elf: $(OBJS)
-	$(CC) $(LINKFLAGS) $(OBJS) $(LIBS) -o TicTacToe.elf
+Concordia.elf: $(OBJS)
+	$(CC) $(LINKFLAGS) $(OBJS) $(LIBS) -o Concordia.elf
 
 %.o80: %.s80
 	$(ASMZ80) $(Z80FLAGS) -o $@ $<
