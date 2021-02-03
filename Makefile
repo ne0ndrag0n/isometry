@@ -27,6 +27,7 @@ all: Concordia.bin
 Concordia.bin: Concordia.elf
 	$(OBJC) -O binary $< temp.bin
 	dd if=temp.bin of=$@ bs=8K conv=sync
+	rm temp.bin Concordia.elf
 
 Concordia.elf: $(OBJS)
 	$(CC) $(LINKFLAGS) $(OBJS) $(LIBS) -o Concordia.elf
