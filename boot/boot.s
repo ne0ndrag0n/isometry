@@ -16,13 +16,13 @@
 
 | Standard MegaDrive ROM header at 0x100
 
-        .ascii  "SEGA MD Example "      /* SEGA must be the first four chars for TMSS */
-        .ascii  "(C)2011         "
-        .ascii  "Example startup "      /* export name */
-        .ascii  "code for MD     "
+        .ascii  "SEGA EVERDRIVE  "      /* SEGA must be the first four chars for TMSS */
+        .ascii  "(C)2021.FEB NOOD"
+        .ascii  "Concordia - The "      /* export name */
+        .ascii  "World of Harmony"
         .ascii  "                "
-        .ascii  "Example startup "      /* domestic (Japanese) name */
-        .ascii  "code for MD     "
+        .ascii  "Concordia - The "      /* domestic (Japanese) name */
+        .ascii  "World of Harmony"
         .ascii  "                "
         .ascii  "GM MK-0000 -00"
         .word   0x0000                  /* checksum - not needed */
@@ -153,4 +153,3 @@ vblank:
 
 
         .text
-

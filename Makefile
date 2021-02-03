@@ -14,7 +14,11 @@ ASFLAGS = -m68000 --register-prefix-optional
 LIBS = -L$(GENDEV)/m68k-elf/lib -L$(GENDEV)/m68k-elf/m68k-elf/lib -lc -lgcc -lnosys
 LINKFLAGS = -T $(GENDEV)/ldscripts/md.ld -Wl,-Map=output.map -nostdlib
 
-OBJS = crt0.o main.o hw_md.o font.o
+SRCS_C = $(wildcard src/*.c)
+SRCS_S = $(wildcard src/*.s)
+
+# Order matters here and boot.s must be the first file!
+OBJS = boot/boot.o $(SRCS_C:.c=.o) $(SRCS_S:.s=.o)
 
 all: TicTacToe.bin
 
@@ -39,3 +43,5 @@ TicTacToe.elf: $(OBJS)
 
 clean:
 	$(RM) *.o *.bin *.elf *.map
+	find src/ -name "*.o" -type f -delete
+	find boot/ -name "*.o" -type f -delete
