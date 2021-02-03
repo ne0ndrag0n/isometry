@@ -20,7 +20,6 @@
 #define SEGA_CTRL_SIX       0x1000
 #define SEGA_CTRL_NONE      0xF000
 
-extern short set_sr(short new_sr);
 extern short get_pad(short pad);
 extern void clear_screen(void);
 extern void put_str(char *str, int color, int x, int y);

@@ -1,8 +1,8 @@
 GENDEV = /opt/toolchains/sega
 
-CC = m68k-elf-gcc
-AS = m68k-elf-as
-OBJC = m68k-elf-objcopy
+CC = $(GENDEV)/m68k-elf/bin/m68k-elf-gcc
+AS = $(GENDEV)/m68k-elf/bin/m68k-elf-as
+OBJC = $(GENDEV)/m68k-elf/bin/m68k-elf-objcopy
 RM = rm -f
 ASMZ80 = zasm
 BINTOC = bin2c
