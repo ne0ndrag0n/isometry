@@ -6,7 +6,7 @@ ASMZ80 = zasm
 BINTOC = bin2c
 
 OPTION =
-INCS = -I. -I$(GENDEV)/m68k-elf/include -I$(GENDEV)/m68k-elf/m68k-elf/include
+INCLUDES = -Iinclude
 CCFLAGS = $(OPTION) -m68000 -Wall -O2 -c -fomit-frame-pointer
 HWCCFLAGS = $(OPTION) -m68000 -Wall -O1 -c -fomit-frame-pointer
 Z80FLAGS = -vb2
@@ -32,7 +32,7 @@ TicTacToe.elf: $(OBJS)
 	$(BINTOC) $<
 
 %.o: %.c
-	$(CC) $(CCFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CCFLAGS) $(INCLUDES) -c $< -o $@
 
 %.o: %.s
 	$(AS) $(ASFLAGS) $< -o $@
