@@ -1,7 +1,8 @@
-#include "debug.h"
+#include "md/debug.h"
 
 int main(void) {
-    ndLoadDebugFont();
+    mdWriteDebugFontColor( 0xEEE );
+    mdLoadDebugFont();
 
     while ( 1 );
 
