@@ -110,29 +110,7 @@ init_hardware:
         move.b  (a5)+,0x0011(a0)
         move.b  (a5),0x0011(a0)
 
-| load font tile data
-        move.w  #0x8F02,(a4)            /* INC = 2 */
-        move.l  #0x40000000,(a4)        /* write VRAM address 0 */
-        lea     font_data,a0
-        move.w  #0x6B*8-1,d2
-7:
-        move.l  (a0)+,d0                /* font fg mask */
-        move.l  d0,d1
-        not.l   d1                      /* font bg mask */
-        andi.l  #0x11111111,d0          /* set font fg color */
-        andi.l  #0x00000000,d1          /* set font bg color */
-        or.l    d1,d0
-        move.l  d0,(a3)                 /* set tile line */
-        dbra    d2,7b
-
-| set the default palette for text
-        move.l  #0xC0000000,(a4)        /* write CRAM address 0 */
-        move.l  #0x00000CCC,(a3)        /* entry 0 (black) and 1 (lt gray) BGR */
-        move.l  #0xC0200000,(a4)        /* write CRAM address 32 */
-        move.l  #0x000000A0,(a3)        /* entry 16 (black) BGR and 17 (green) */
-        move.l  #0xC0400000,(a4)        /* write CRAM address 64 */
-        move.l  #0x0000000A,(a3)        /* entry 32 (black) BGR and 33 (red) */
-
+| finish
         move.w  #0x8174,(a4)            /* display on, vblank enabled */
         move    #0x2000,sr              /* enable interrupts */
 
