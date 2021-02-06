@@ -117,13 +117,21 @@ init_hardware:
         rts
 
 | VDP register initialization values
+|
+|        VDP memory map
+|        A - 0xC000 to 0xD000
+|        W - 0xD000 to 0xE000
+|        B - 0xE000 to 0xF000
+|  Sprites - 0xF000 to 0xF280
+|  HScroll - 0xF400 to 0xF760
+|
 InitVDPRegs:
         .byte   0x04    /* 8004 => write reg 0 = /IE1 (no HBL INT), /M3 (enable read H/V cnt) */
         .byte   0x14    /* 8114 => write reg 1 = /DISP (display off), /IE0 (no VBL INT), M1 (DMA enabled), /M2 (V28 mode) */
         .byte   0x30    /* 8230 => write reg 2 = Name Tbl A = 0xC000 */
         .byte   0x34    /* 832C => write reg 3 = Name Tbl W = 0xD000 */
         .byte   0x07    /* 8407 => write reg 4 = Name Tbl B = 0xE000 */
-        .byte   0x64    /* 8554 => write reg 5 = Sprite Attr Tbl = 0xC800 */
+        .byte   0x78    /* 8554 => write reg 5 = Sprite Attr Tbl = 0xF000 */
         .byte   0x00    /* 8600 => write reg 6 = always 0 */
         .byte   0x00    /* 8700 => write reg 7 = BG color */
         .byte   0x00    /* 8800 => write reg 8 = always 0 */
@@ -131,7 +139,7 @@ InitVDPRegs:
         .byte   0x00    /* 8A00 => write reg 10 = HINT = 0 */
         .byte   0x00    /* 8B00 => write reg 11 = /IE2 (no EXT INT), full scroll */
         .byte   0x81    /* 8C81 => write reg 12 = H40 mode, no lace, no shadow/hilite */
-        .byte   0x36    /* 8D2B => write reg 13 = HScroll Tbl = 0xD800 */
+        .byte   0x3D    /* 8D2B => write reg 13 = HScroll Tbl = 0xF400 */
         .byte   0x00    /* 8E00 => write reg 14 = always 0 */
         .byte   0x01    /* 8F01 => write reg 15 = data INC = 1 */
         .byte   0x01    /* 9001 => write reg 16 = Scroll Size = 64x32 */
