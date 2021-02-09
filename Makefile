@@ -7,7 +7,7 @@ RM = rm -f
 ASMZ80 = zasm
 BINTOC = bin2c
 
-OPTION =
+OPTION = --std=c11
 INCLUDES = -Iinclude
 CCFLAGS = $(OPTION) -m68000 -Wall -O2 -c -fomit-frame-pointer
 HWCCFLAGS = $(OPTION) -m68000 -Wall -O1 -c -fomit-frame-pointer

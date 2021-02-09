@@ -114,7 +114,7 @@ gTicks:
         .long   0
         .global joypad1
 joypad1:
-        .word   0
+        .word   0x00FF
 
 
 | Exception handlers
@@ -128,6 +128,9 @@ hblank:
         rte
 
 vblank:
+        move.l  d0, -(sp)
+        move.l  d1, -(sp)
+
         addq.l  #1,gTicks       /* Increment tick counter */
         /* Dump joypad */
         move.w  #0x100, 0xA11100
@@ -155,4 +158,6 @@ vblank:
 
         move.w  d0, joypad1  /* Save value to global */
 
+        move.l  (sp)+, d1
+        move.l  (sp)+, d0
         rte
