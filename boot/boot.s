@@ -108,48 +108,51 @@ skip_tmss:
 
 
 | put redirection vectors and gTicks at start of Work RAM
-
         .data
-
-        .global exception_vector
-exception_vector:
-        .long   0
-        .global exception_vector
-hblank_vector:
-        .long   0
-        .global exception_vector
-vblank_vector:
-        .long   0
         .global gTicks
 gTicks:
         .long   0
+        .global joypad1
+joypad1:
+        .word   0
+
 
 | Exception handlers
 
+        .text
+
 exception:
-        move.l  exception_vector,-(sp)
-        beq.b   1f
-        rts
-1:
-        addq.l  #4,sp
         rte
 
 hblank:
-        move.l  hblank_vector,-(sp)
-        beq.b   1f
-        rts
-1:
-        addq.l  #4,sp
         rte
 
 vblank:
-        move.l  vblank_vector,-(sp)
-        beq.b   1f
-        rts
-1:
-        addq.l  #1,gTicks
-        addq.l  #4,sp
+        addq.l  #1,gTicks       /* Increment tick counter */
+        /* Dump joypad */
+        move.w  #0x100, 0xA11100
+
+        move.b  #0x40, 0xA10003
+        nop
+        nop
+        nop
+        nop
+        move.b (0xA10003),d0
+
+        move.b #0x0, 0xA10003
+        nop
+        nop
+        nop
+        nop
+        move.b (0xA10003),d1
+
+        move.w  #0x0, 0xA11100
+
+        and.b   #0x3F, d0    /* Rearrange bits */
+        and.b   #0x30, d1    /* into SACBRLDU */
+        lsl.b   #2, d1
+        or.b    d1, d0
+
+        move.w  d0, joypad1  /* Save value to global */
+
         rte
-
-
-        .text

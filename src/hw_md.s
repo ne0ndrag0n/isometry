@@ -9,6 +9,9 @@
 init_hardware:
         movem.l d2-d7/a2-a6,-(sp)
 
+| pause Z80
+        move.w  #0x100, 0xA11100
+
 | init joyports
         lea     0xA10000,a5
         move.b  #0x40,0x09(a5)
@@ -68,7 +71,6 @@ init_hardware:
 
 | halt Z80 and init FM chip
         /* Allow the 68k to access the FM chip */
-        move.w  #0x100,0xA11100
         move.w  #0x100,0xA11200
 
 | reset YM2612
@@ -111,6 +113,7 @@ init_hardware:
 
 | finish
         move.w  #0x8174,(a4)            /* display on, vblank enabled */
+        move.w  #0x0, 0xA11100          /* reenable z80 */
         move    #0x2000,sr              /* enable interrupts */
 
         movem.l (sp)+,d2-d7/a2-a6
