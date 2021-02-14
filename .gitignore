@@ -1,5 +1,5 @@
 *.o
-*.bin
+Concordia.bin
 *.map
 *.elf
 history/
