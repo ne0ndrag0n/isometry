@@ -158,6 +158,8 @@ vblank:
 
         move.w  d0, joypad1  /* Save value to global */
 
+        jsr mdDmaExecute
+
         move.l  (sp)+, d1
         move.l  (sp)+, d0
         rte
