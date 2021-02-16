@@ -1,6 +1,8 @@
 #include "md/debug.h"
 #include "md/vdp.h"
 #include "md/joypad.h"
+#include "md/dma.h"
+#include "example_image.h"
 
 int main(void) {
     mdWriteDebugFontColor( 0xEEE );

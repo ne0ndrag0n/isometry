@@ -10,4 +10,4 @@ struct DmaQueueItem {
 
 struct DmaQueueItem dmaQueue[ 15 ];
 
-extern void mdDmaEnqueue( struct DmaQueueItem item );
+void mdDmaEnqueue( struct DmaQueueItem item );
