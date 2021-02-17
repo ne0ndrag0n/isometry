@@ -46,4 +46,9 @@ mdDmaExecute:
 	move.l 6(a0), (0xC00004)	/* Execute DMA */
 	move.w #0x000, (0xA11100)	/* Restart the z80 */
 
+	/* Done transferring - get rid of it! */
+	move.l	#0, (a0)
+	move.w	#0, 4(a0)
+	move.l	#0, 6(a0)
+
 	bra.s	2b
