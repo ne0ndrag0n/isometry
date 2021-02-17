@@ -10,4 +10,4 @@ struct DmaQueueItem {
 
 struct DmaQueueItem dmaQueue[ 15 ];
 
-void mdDmaEnqueue( struct DmaQueueItem item );
+void mdDmaEnqueue( uint32_t source, uint16_t size, uint32_t destinationWord );
