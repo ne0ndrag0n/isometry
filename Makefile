@@ -17,7 +17,7 @@ LIBS = -L$(GENDEV)/m68k-elf/lib -L$(GENDEV)/m68k-elf/m68k-elf/lib -lc -lgcc -lno
 LINKFLAGS = -T $(GENDEV)/ldscripts/md.ld -Wl,-Map=output.map -nostdlib
 
 SRCS_C = $(wildcard src/*.c)
-SRCS_S = $(wildcard src/*.s src/resource/*.s)
+SRCS_S = $(wildcard src/*.s)
 
 # Order matters here and boot.s must be the first file!
 OBJS = boot/boot.o $(SRCS_C:.c=.o) $(SRCS_S:.s=.o)

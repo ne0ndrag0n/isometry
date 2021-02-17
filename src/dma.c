@@ -3,7 +3,7 @@
 
 struct DmaQueueItem dmaQueue[ 15 ] = { 0 };
 
-void mdDmaEnqueue( uint32_t source, uint16_t size, uint32_t destinationWord ) {
+void mdDmaEnqueue( uintptr_t source, uint16_t size, uint32_t destinationWord ) {
     // Find nearest null sourceAddress
     for( size_t i = 0; i != 15; i++ ) {
         if( dmaQueue[ i ].sourceAddress == 0 ) {
