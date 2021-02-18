@@ -27,6 +27,11 @@ mdDmaExecute:
 	move.b	4(a0), d0
 	move.w	d0, (0xC00004)		/* Write high byte */
 
+	/* Skip to segment 4 if this is a DMA copy or DMA fill (bit #7 set in upper byte of DMA source) */
+	btst.b	#7, 1(a0)
+	bne.w	4f
+
+	/* M68k to VDP */
 	/* Write source address to VDP registers 0x15, 0x16, and 0x17 */
 	move.w	#0x9500, d0
 	move.b	3(a0), d0
@@ -46,9 +51,26 @@ mdDmaExecute:
 	move.l 6(a0), (0xC00004)	/* Execute DMA */
 	move.w #0x000, (0xA11100)	/* Restart the z80 */
 
+	bra.s	5f
+
+4:
+	/* DMA fill or DMA copy */
+	move.w	#0x9500, (0xC00004)		/* Write low byte */
+	move.w	#0x9600, (0xC00004)		/* Write middle byte */
+
+	move.w	#0x9700, d0
+	move.b	1(a0), d0
+	move.w	d0, (0xC00004)		/* Write high byte */
+
+	move.w #0x100, (0xA11100)	/* Pause the z80 really quick */
+	move.l 6(a0), (0xC00004)	/* Stage DMA fill */
+	move.w 2(a0), (0xC00000)    /* Execute DMA fill by sending value from source address */
+	move.w #0x000, (0xA11100)	/* Restart the z80 */
+
+5:
 	/* Done transferring - get rid of it! */
 	move.l	#0, (a0)
 	move.w	#0, 4(a0)
 	move.l	#0, 6(a0)
 
-	bra.s	2b
+	bra.w	2b

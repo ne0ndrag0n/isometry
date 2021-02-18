@@ -17,7 +17,11 @@
 typedef uint16_t VdpPlane;
 typedef uint16_t VdpWord;
 
+uint16_t mdVdpPlaneWidth;
+uint16_t mdVdpPlaneHeight;
+
 uint32_t mdVdpGetControlWord( uint32_t address, uint32_t mode );
+void mdVdpClearNametable( VdpPlane plane );
 
 /**
  * Write word to vdp address
