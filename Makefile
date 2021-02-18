@@ -16,7 +16,7 @@ ASFLAGS = -Iresource -m68000 --register-prefix-optional
 LIBS = -L$(GENDEV)/m68k-elf/lib -L$(GENDEV)/m68k-elf/m68k-elf/lib -lc -lgcc -lnosys
 LINKFLAGS = -T $(GENDEV)/ldscripts/md.ld -Wl,-Map=output.map -nostdlib
 
-SRCS_C = $(wildcard src/*.c)
+SRCS_C = $(wildcard src/*.c src/resource/*.c)
 SRCS_S = $(wildcard src/*.s)
 
 # Order matters here and boot.s must be the first file!
