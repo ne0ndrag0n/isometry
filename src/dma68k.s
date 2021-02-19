@@ -32,6 +32,8 @@ mdDmaExecute:
 	bne.w	4f
 
 	/* M68k to VDP */
+	move.w	#0x8F02, (0xC00004)		/* Autoincrement by word */
+
 	/* Write source address to VDP registers 0x15, 0x16, and 0x17 */
 	move.w	#0x9500, d0
 	move.b	3(a0), d0
@@ -55,6 +57,8 @@ mdDmaExecute:
 
 4:
 	/* DMA fill or DMA copy */
+	move.w	#0x8F01, (0xC00004)		/* Autoincrement by byte */
+
 	move.w	#0x9500, (0xC00004)		/* Write low byte */
 	move.w	#0x9600, (0xC00004)		/* Write middle byte */
 
@@ -66,6 +70,8 @@ mdDmaExecute:
 	move.l 6(a0), (0xC00004)	/* Stage DMA fill */
 	move.w 2(a0), (0xC00000)    /* Execute DMA fill by sending value from source address */
 	move.w #0x000, (0xA11100)	/* Restart the z80 */
+
+	move.w	#0x8F02, (0xC00004)		/* Autoincrement by word */
 
 5:
 	/* Done transferring - get rid of it! */

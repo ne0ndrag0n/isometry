@@ -15,8 +15,14 @@ void mdDmaEnqueue( uintptr_t source, uint16_t size, uint32_t destinationWord ) {
             // Doing it here means we don't do it in vblank.
             dmaQueue[ i ].destinationWord |= 0x00000080;
             // All DMA operations use words instead of bytes
-            dmaQueue[ i ].sourceAddress >>= 1;
-            dmaQueue[ i ].size >>= 1;
+            // Don't convert to words if the DMA FILL/DMA COPY flag is set
+            if( !( source & 0x00800000 ) ) {
+                dmaQueue[ i ].sourceAddress >>= 1;
+                dmaQueue[ i ].size >>= 1;
+            } else {
+                // For DMA FILLs, size must be decremented
+                dmaQueue[ i ].size -= 1;
+            }
             return;
         }
     }

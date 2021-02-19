@@ -2,8 +2,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define VDP_DMA_FILL( value ) ( 0x00800000 | value )
-#define VDP_DMA_COPY( value ) ( 0x00C00000 | value )
+#define VDP_DMA_FILL( value ) ( 0x00800000 | (((value) & 0x000000FF) << 8) )
+#define VDP_DMA_COPY( value ) ( 0x00C00000 | (((value) & 0x000000FF) << 8) )
 
 struct DmaQueueItem {
 	uintptr_t sourceAddress;
