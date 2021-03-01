@@ -4,6 +4,25 @@
 uint16_t mdVdpPlaneWidth = 64;
 uint16_t mdVdpPlaneHeight = 32;
 
+void mdVdpSetPlaneScroll( uint32_t settings ) {
+    // Upper word contains the location of a whole-plane-mode scroll table index
+    // Lower word contains the amount by which to set
+
+    if( ( ( settings & 0xFF000000 ) >> 16 ) == VDP_VSCROLL ) {
+        // vscroll mode - write to vsram
+        mdVdpWriteWord(
+            VDP_CONTROL_WORD( ( ( settings & 0x00FF0000 ) >> 16 ), VDP_VSRAM_WRITE ),
+            settings & 0x0000FFFF
+        );
+    } else {
+        // hscroll mode - write to vram
+        mdVdpWriteWord(
+            VDP_CONTROL_WORD( ( ( settings & 0xFFFF0000 ) >> 16 ), VDP_VRAM_WRITE ),
+            settings & 0x0000FFFF
+        );
+    }
+}
+
 void mdVdpClearNametable( VdpPlane plane ) {
     // Plane width * plane height * each nametable entry is a word
     uint16_t totalBytes = mdVdpPlaneWidth * mdVdpPlaneHeight * 2;
@@ -12,7 +31,7 @@ void mdVdpClearNametable( VdpPlane plane ) {
     mdDmaEnqueue( VDP_DMA_FILL( 0 ), totalBytes, VDP_CONTROL_WORD( plane, VDP_VRAM_WRITE ) );
 }
 
-void mdVdpStampImage( VdpPlane plane, uint16_t tileAttribute, uint32_t dimensions ) {
+void mdVdpWriteNametable( VdpPlane plane, uint16_t tileAttribute, uint32_t dimensions ) {
     // Unpack arguments
     uint16_t x = ( dimensions & 0xFF000000 ) >> 24;
     uint16_t y = ( dimensions & 0x00FF0000 ) >> 16;
